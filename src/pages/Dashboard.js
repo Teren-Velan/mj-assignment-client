@@ -47,7 +47,6 @@ function Dashboard() {
     return fetch(`${uriDomain}/api/product`, {
       method: "GET",
       headers: {
-        "Access-Control-Allow-Origin": "*",
         authorization: token ? `Bearer ${token}` : "",
       },
     })

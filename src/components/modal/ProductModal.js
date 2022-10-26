@@ -154,9 +154,7 @@ export const AddProductModal = (props) => {
                 (async (e) => {
                   response = await AddProduct(formData);
 
-                  let { result } = response;
-
-                  if (response?.error) {
+                  if (response?.result?.error) {
                     setFormIsLoading(false);
                     setAddProductsModalOpen(false);
                     toast({
@@ -182,6 +180,8 @@ export const AddProductModal = (props) => {
                       duration: 5000,
                       isClosable: true,
                     });
+
+                    let { result } = response;
 
                     updateUser?.products?.unshift(result);
                     dispatch({ type: "UPDATE_USER", data: updateUser });

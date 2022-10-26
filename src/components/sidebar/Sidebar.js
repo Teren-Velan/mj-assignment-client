@@ -45,13 +45,7 @@ export const SidebarHeader = (props) => {
             {(isDesktopMode && showSidebarVariant === false) ||
             (isMobile && showSidebarVariant === true) ? (
               <Flex mt="xs" flexDir="column" alignItems="flex-start" w="100%">
-                <Text
-                  fontWeight="800"
-                  fontSize="md"
-                  color="#fff"
-                  w="100%"
-                  isTruncated
-                >
+                <Text fontWeight="800" fontSize="md" color="#fff" w="100%">
                   {title}
                 </Text>
               </Flex>
