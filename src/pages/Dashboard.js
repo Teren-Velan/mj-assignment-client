@@ -1,43 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { useQuery, useMutation } from "react-query";
+import { useQuery } from "react-query";
 
-import {
-  Flex,
-  Text,
-  Divider,
-  Container,
-  Col,
-  InputGroup,
-  Input,
-  Select,
-  Box,
-  Header,
-  Quote,
-  InputButton,
-  Form,
-  InputError,
-  Button,
-  Heading,
-  Icon,
-  InputLeftElement,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { Flex, Divider, Box, Heading } from "@chakra-ui/react";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
-import { MdMenu, MdOutlineSearch } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 
 import { Sidebar, SidebarHeader } from "../components/sidebar/Sidebar";
 import { SidebarLeftContent } from "../components/sidebar/SidebarContent";
 import { Shell, ShellHeader } from "../components/layout/Shell";
 
-import {
-  MdOutlineControlPoint,
-  MdOutlineEdit,
-  MdOutlineDelete,
-  MdErrorOutline,
-} from "react-icons/md";
-
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   AddProductModal,
