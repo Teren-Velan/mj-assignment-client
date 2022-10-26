@@ -47,9 +47,8 @@ export const AddProductModal = (props) => {
   async function AddProduct(variables) {
     return fetch(`${uriDomain}/api/product/create`, {
       method: "POST",
+      mode: "cors",
       headers: {
-        mode: "no-cors",
-        "Access-Control-Allow-Origin": "*",
         // "content-type": "multipart/form-data",
         authorization: token ? `Bearer ${token}` : "",
       },
