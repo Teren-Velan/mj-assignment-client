@@ -154,7 +154,38 @@ export const AddProductModal = (props) => {
                 (async (e) => {
                   response = await AddProduct(formData);
 
-                  if (response?.result?.error) {
+                  if (response) {
+                    if (response?.error) {
+                      setFormIsLoading(false);
+                      setAddProductsModalOpen(false);
+                      toast({
+                        position: "top-right",
+                        title: "Error",
+                        description:
+                          "An unexpected error occured.Please try again.",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true,
+                      });
+                    } else {
+                      let updateUser = user;
+
+                      setFormIsLoading(false);
+                      setAddProductsModalOpen(false);
+                      toast({
+                        position: "top-right",
+                        title: "Product Created",
+                        description:
+                          "Your product has been successfully created.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                      });
+
+                      updateUser?.products?.unshift(response?.result);
+                      dispatch({ type: "UPDATE_USER", data: updateUser });
+                    }
+                  } else {
                     setFormIsLoading(false);
                     setAddProductsModalOpen(false);
                     toast({
@@ -166,25 +197,6 @@ export const AddProductModal = (props) => {
                       duration: 5000,
                       isClosable: true,
                     });
-                  } else {
-                    let updateUser = user;
-
-                    setFormIsLoading(false);
-                    setAddProductsModalOpen(false);
-                    toast({
-                      position: "top-right",
-                      title: "Product Created",
-                      description:
-                        "Your product has been successfully created.",
-                      status: "success",
-                      duration: 5000,
-                      isClosable: true,
-                    });
-
-                    let { result } = response;
-
-                    updateUser?.products?.unshift(result);
-                    dispatch({ type: "UPDATE_USER", data: updateUser });
                   }
                 })();
               },
