@@ -46,27 +46,19 @@ const authenticateClient = async () => {
   let result = parseCookies();
   let token = result["mj-cookie"];
 
-  // let branch = process.env.branch;
+  let nodeEnv = process.env.NODE_ENV;
 
   let uri = null;
 
-  //   if (branch) {
-  //     console.log(`Connecting to ${branch} API`);
-  //     if (branch === "master") {
-  //       uri = `https://app2.getpaid.asia/api`;
-  //     } else if (branch === "demo") {
-  //       uri = `https://app2.getpaid.technology/api`;
-  //     } else if (branch === "integration") {
-  //       uri = `https://qa.app2.getpaid.technology/api`;
-  //     } else {
-  //       uri = `https://getpaid-app2-git-${modifiedBranchName}-getpaid.vercel.app/api`;
-  //     }
-  //   } else {
-  //     console.log("Connecting to localhost API");
-  //     uri = "http://localhost:3000/api";
-  //   }
-
-  uri = "http://localhost:3002/api/auth";
+  if (nodeEnv) {
+    console.log(`Connecting to ${nodeEnv} API`);
+    if (nodeEnv === "production") {
+      uri = `https://mighty-assignment-api.herokuapp.com/api/auth`;
+    }
+  } else {
+    console.log("Connecting to localhost API");
+    uri = "http://localhost:3002/api/auth";
+  }
 
   let res = null;
   try {
