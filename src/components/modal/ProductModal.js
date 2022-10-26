@@ -21,6 +21,13 @@ import { InputError } from "../inputs/InputError";
 import { InputWrapper } from "../inputs/InputGroup";
 import { useSelector, useDispatch } from "react-redux";
 
+let uriDomain =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_PROD_DOMAIN
+    : process.env.REACT_APP_DEV_DOMAIN;
+
+console.log({ uriDomain });
+
 export const AddProductModal = (props) => {
   let {
     modal: { addProductsModalOpen = false, setAddProductsModalOpen },
@@ -38,7 +45,7 @@ export const AddProductModal = (props) => {
   let [formError, setFormError] = useState([]);
 
   async function AddProduct(variables) {
-    return fetch("http://localhost:3002/api/product/create", {
+    return fetch(`${uriDomain}/api/product/create`, {
       method: "POST",
       headers: {
         // "content-type": "multipart/form-data",
@@ -378,7 +385,7 @@ export const UpdateProductModal = (props) => {
   let [formError, setFormError] = useState([]);
 
   async function UpdateProduct(variables) {
-    return fetch(`http://localhost:3002/api/product/update/${productId}`, {
+    return fetch(`${uriDomain}/api/product/update/${productId}`, {
       method: "PUT",
       headers: {
         authorization: token ? `Bearer ${token}` : "",
@@ -682,7 +689,7 @@ export const DeleteProductModal = (props) => {
   let [formIsLoading, setFormIsLoading] = useState(false);
 
   async function DeleteProduct(variables) {
-    return fetch(`http://localhost:3002/api/product/delete/${productId}`, {
+    return fetch(`${uriDomain}/api/product/delete/${productId}`, {
       method: "DELETE",
       headers: {
         authorization: token ? `Bearer ${token}` : "",

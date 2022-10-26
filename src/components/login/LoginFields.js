@@ -16,7 +16,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 async function loginUser(credentials) {
-  return fetch("http://localhost:3002/api/auth/signin", {
+  let uri =
+    process.env.NODE_ENV === "production"
+      ? `${process.env.REACT_APP_PROD_DOMAIN}/auth/signin`
+      : `${process.env.REACT_APP_DEV_DOMAIN}/auth/signin`;
+
+  console.log({ uri });
+
+  return fetch(uri, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -98,7 +98,11 @@ export const ProductDisplay = (props) => {
                   borderTopLeftRadius="1rem"
                   w="300px"
                   h="300px"
-                  background={`url(http://localhost:3002/${image})`}
+                  background={
+                    process.env.NODE_ENV === "production"
+                      ? `url(${process.env.REACT_APP_PROD_DOMAIN}/${image})`
+                      : `url(${process.env.REACT_APP_DEV_DOMAIN}/${image})`
+                  }
                   backgroundPosition="center"
                   backgroundSize="cover"
                   boxShadow="0 0 10px rgba(0, 0, 0, 0.315)"

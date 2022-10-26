@@ -36,8 +36,15 @@ function Dashboard() {
   let cookie = nookies.get();
   const token = cookie["mj-cookie"];
 
+  let uriDomain =
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_PROD_DOMAIN
+      : process.env.REACT_APP_DEV_DOMAIN;
+
+  console.log({ uriDomain });
+
   async function fetchAllProducts() {
-    return fetch("http://localhost:3002/api/product", {
+    return fetch(`${uriDomain}/api/product`, {
       method: "GET",
       headers: {
         authorization: token ? `Bearer ${token}` : "",
