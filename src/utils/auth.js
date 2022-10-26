@@ -50,15 +50,19 @@ const authenticateClient = async () => {
 
   let uri = null;
 
+  console.log({ nodeEnv });
+
   if (nodeEnv) {
     console.log(`Connecting to ${nodeEnv} API`);
     if (nodeEnv === "production") {
       uri = `https://mighty-assignment-api.herokuapp.com/api/auth`;
+    } else {
+      console.log("Connecting to localhost API");
+      uri = "http://localhost:3002/api/auth";
     }
-  } else {
-    console.log("Connecting to localhost API");
-    uri = "http://localhost:3002/api/auth";
   }
+
+  console.log({ uri });
 
   let res = null;
   try {

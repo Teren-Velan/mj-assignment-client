@@ -18,8 +18,8 @@ import { useDispatch } from "react-redux";
 async function loginUser(credentials) {
   let uri =
     process.env.NODE_ENV === "production"
-      ? `${process.env.REACT_APP_PROD_DOMAIN}/auth/signin`
-      : `${process.env.REACT_APP_DEV_DOMAIN}/auth/signin`;
+      ? `${process.env.REACT_APP_PROD_DOMAIN}/api/auth/signin`
+      : `${process.env.REACT_APP_DEV_DOMAIN}/api/auth/signin`;
 
   console.log({ uri });
 
