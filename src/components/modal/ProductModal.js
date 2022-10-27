@@ -26,8 +26,6 @@ let uriDomain =
     ? process.env.REACT_APP_PROD_DOMAIN
     : process.env.REACT_APP_DEV_DOMAIN;
 
-console.log({ uriDomain });
-
 export const AddProductModal = (props) => {
   let {
     modal: { addProductsModalOpen = false, setAddProductsModalOpen },

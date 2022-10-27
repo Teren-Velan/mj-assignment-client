@@ -15,13 +15,12 @@ import { setCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+//login user fetch api call
 async function loginUser(credentials) {
   let uri =
     process.env.NODE_ENV === "production"
       ? `${process.env.REACT_APP_PROD_DOMAIN}/api/auth/signin`
       : `${process.env.REACT_APP_DEV_DOMAIN}/api/auth/signin`;
-
-  console.log({ uri });
 
   return fetch(uri, {
     method: "POST",

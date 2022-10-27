@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import nookies, { parseCookies, destroyCookie } from "nookies";
+import { parseCookies, destroyCookie } from "nookies";
 
+//hook to run authentication on refresh or page change
 export const useAuth = ({ onCompleted, onError, page = "" }) => {
   let dispatch = useDispatch();
   let [user, setUser] = useState(null);
@@ -42,6 +43,7 @@ export const useAuth = ({ onCompleted, onError, page = "" }) => {
   return { data: user, loading, error };
 };
 
+//run api call to authenticate client based on token
 const authenticateClient = async () => {
   let result = parseCookies();
   let token = result["mj-cookie"];
@@ -50,19 +52,14 @@ const authenticateClient = async () => {
 
   let uri = null;
 
-  console.log({ nodeEnv });
-
   if (nodeEnv) {
     console.log(`Connecting to ${nodeEnv} API`);
     if (nodeEnv === "production") {
       uri = `https://mighty-assignment-api.herokuapp.com/api/auth`;
     } else {
-      console.log("Connecting to localhost API");
       uri = "http://localhost:3002/api/auth";
     }
   }
-
-  console.log({ uri });
 
   let res = null;
   try {

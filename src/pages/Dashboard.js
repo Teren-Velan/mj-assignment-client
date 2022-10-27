@@ -5,33 +5,28 @@ import { useQuery } from "react-query";
 import { Flex, Divider, Box, Heading } from "@chakra-ui/react";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { MdMenu } from "react-icons/md";
-
 import { Sidebar, SidebarHeader } from "../components/sidebar/Sidebar";
 import { SidebarLeftContent } from "../components/sidebar/SidebarContent";
 import { Shell, ShellHeader } from "../components/layout/Shell";
-
 import { useSelector } from "react-redux";
-
 import {
   AddProductModal,
   UpdateProductModal,
   DeleteProductModal,
 } from "../components/modal/ProductModal";
-
 import { useAuth } from "../utils/auth";
-
 import nookies from "nookies";
 import { useNavigate } from "react-router-dom";
 import { ProductDisplay } from "../components/dashboard/ProductsDisplay";
 
 function Dashboard() {
   let navigate = useNavigate();
-
   useAuth({
     onError: (error) => {
       navigate("/logout");
     },
   });
+  let user = useSelector((state) => state.user);
 
   let cookie = nookies.get();
   const token = cookie["mj-cookie"];
@@ -40,8 +35,6 @@ function Dashboard() {
     process.env.NODE_ENV === "production"
       ? process.env.REACT_APP_PROD_DOMAIN
       : process.env.REACT_APP_DEV_DOMAIN;
-
-  console.log({ uriDomain });
 
   async function fetchAllProducts() {
     return fetch(`${uriDomain}/api/product`, {
@@ -56,9 +49,6 @@ function Dashboard() {
       });
   }
   const { data } = useQuery("fetchAllProducts", fetchAllProducts);
-
-  // redux
-  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (user) {
