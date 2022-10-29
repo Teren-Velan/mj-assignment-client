@@ -34,6 +34,7 @@ export const AddProductModal = (props) => {
 
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const onClose = () => {
+    setSkuInput("");
     setAddProductsModalOpen(false);
   };
   const toast = useToast();
