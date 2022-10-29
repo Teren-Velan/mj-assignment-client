@@ -13,13 +13,12 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-
 import validator from "validator";
-
 import { Form } from "../inputs/Form";
 import { InputError } from "../inputs/InputError";
 import { InputWrapper } from "../inputs/InputGroup";
 import { useSelector, useDispatch } from "react-redux";
+import { skuGenerator } from "../../utils/skuGenerator";
 
 let uriDomain =
   process.env.NODE_ENV === "production"
@@ -41,13 +40,13 @@ export const AddProductModal = (props) => {
 
   let [formIsLoading, setFormIsLoading] = useState(false);
   let [formError, setFormError] = useState([]);
+  let [skuInput, setSkuInput] = useState("");
 
   async function AddProduct(variables) {
     return fetch(`${uriDomain}/api/product/create`, {
       method: "POST",
       mode: "cors",
       headers: {
-        // "content-type": "multipart/form-data",
         authorization: token ? `Bearer ${token}` : "",
       },
       body: variables,
@@ -125,6 +124,20 @@ export const AddProductModal = (props) => {
 
                   validated = false;
                 }
+                let checkUniqueSku = user.products.forEach((prod) => {
+                  if (prod.sku === sku) {
+                    setFormError((prev) => [
+                      ...prev,
+                      {
+                        id: "sku",
+                        message:
+                          "SKU id already exist , please choose another id",
+                      },
+                    ]);
+                    validated = false;
+                  }
+                });
+
                 if (title === "") {
                   setFormError((prev) => [
                     ...prev,
@@ -147,6 +160,7 @@ export const AddProductModal = (props) => {
                 }
 
                 setFormIsLoading(true);
+                setSkuInput("");
 
                 let response;
                 (async (e) => {
@@ -262,34 +276,58 @@ export const AddProductModal = (props) => {
                         />
                       </InputWrapper>
 
-                      <InputWrapper
-                        mt="sm"
-                        label="Storage Keeping Unit"
-                        color="brand1.secondary.400"
-                        // helperText="Please enter a valid Account Name as it appears in your banking records to ensure there is no delay in receiving your payout."
-                      >
-                        <Input
-                          autoComplete="off"
-                          color="brand1.secondary.400"
-                          id="sku"
-                          name="sku"
-                          isDisabled={formIsLoading}
-                          type="Text"
-                          placeholder={"Stock Keeping Unit Number"}
-                          onChange={(e) => {
-                            setFieldValue("sku", e.target.value);
-                          }}
-                          invalid={formError.find(
-                            (error) => error.id === "sku"
-                          )}
-                        />
-                        <InputError
-                          invalid={
-                            formError.find((error) => error.id === "sku")
-                              ?.message || null
-                          }
-                        />
-                      </InputWrapper>
+                      <Flex align="flex-end" justify="space-between">
+                        <Flex flex="2" mr="sm">
+                          <InputWrapper
+                            w="100%"
+                            mt="sm"
+                            label="Storage Keeping Unit"
+                            color="brand1.secondary.400"
+                            // helperText="Please enter a valid Account Name as it appears in your banking records to ensure there is no delay in receiving your payout."
+                          >
+                            <Input
+                              autoComplete="off"
+                              color="brand1.secondary.400"
+                              id="sku"
+                              name="sku"
+                              isDisabled={formIsLoading}
+                              type="Text"
+                              placeholder={"Stock Keeping Unit Number"}
+                              onChange={(e) => {
+                                setFieldValue("sku", e.target.value);
+                                setSkuInput(e.target.value);
+                              }}
+                              invalid={formError.find(
+                                (error) => error.id === "sku"
+                              )}
+                              value={skuInput}
+                            />
+
+                            <InputError
+                              invalid={
+                                formError.find((error) => error.id === "sku")
+                                  ?.message || null
+                              }
+                            />
+                          </InputWrapper>
+                        </Flex>
+                        <Flex flex="1">
+                          <Button
+                            _hover={{ bg: "secondary.100", color: "#fff" }}
+                            _active={{ bg: "secondary.100", color: "#fff" }}
+                            bg="secondary.100"
+                            color="#fff"
+                            w="100%"
+                            onClick={() => {
+                              let skuValue = skuGenerator();
+                              setFieldValue("sku", skuValue);
+                              setSkuInput(skuValue);
+                            }}
+                          >
+                            Generate SKU
+                          </Button>
+                        </Flex>
+                      </Flex>
                     </Flex>
                   </Box>
                 </>
@@ -308,6 +346,7 @@ export const AddProductModal = (props) => {
             onClick={() => {
               setFormError([]);
               setAddProductsModalOpen(false);
+              setSkuInput("");
             }}
             bg="primary.100"
             color="#fff"

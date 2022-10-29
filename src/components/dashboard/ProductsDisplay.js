@@ -88,7 +88,126 @@ export const ProductDisplay = (props) => {
         m="0 auto"
         w="100%"
       >
-        {filteredData?.length ? (
+        {productList?.length === 0 ? (
+          <Flex
+            mt="md"
+            w="100%"
+            h="auto"
+            flexDir="column"
+            align="center"
+            justify="center"
+          >
+            <Icon
+              mb="1rem"
+              color="secondary.100"
+              w={20}
+              h={20}
+              as={MdErrorOutline}
+            />
+            <Heading
+              fontFamily="primary"
+              textAlign="center"
+              fontSize="2xl"
+              fontWeight="normal"
+            >
+              Click on the "Add Product" button to get started
+            </Heading>
+          </Flex>
+        ) : filteredData?.length ? (
+          filteredData?.map((product) => {
+            let { image, sku, title, _id } = product;
+            return (
+              <Flex mt="2rem" flexDir="column" key={_id}>
+                <Flex
+                  borderTopRightRadius="1rem"
+                  borderTopLeftRadius="1rem"
+                  w="300px"
+                  h="300px"
+                  background={`url(${image})`}
+                  backgroundPosition="center"
+                  backgroundSize="cover"
+                  boxShadow="0 0 10px rgba(0, 0, 0, 0.315)"
+                ></Flex>
+                <Flex
+                  borderBottomRightRadius="1rem"
+                  borderBottomLeftRadius="1rem"
+                  p="sm"
+                  justify="center"
+                  mb="1rem"
+                  w="300px"
+                  h="auto"
+                  bg="#fff"
+                >
+                  <Flex
+                    flexWrap="wrap"
+                    justify="center"
+                    flexDir="column"
+                    flex="1.5"
+                  >
+                    <Text fontFamily="primary">Title: {title}</Text>
+                    <Text fontFamily="primary">SKU: {sku}</Text>
+                  </Flex>
+                  <Flex align="center" justify="space-around" flex="1">
+                    <Icon
+                      onClick={() => {
+                        setSelectedId(_id);
+                        setUpdateProductsModalOpen(true);
+                      }}
+                      cursor="pointer"
+                      p="5px"
+                      w={10}
+                      h={10}
+                      border="1px solid green"
+                      borderRadius="50%"
+                      as={MdOutlineEdit}
+                    />
+                    <Icon
+                      onClick={() => {
+                        setSelectedId(_id);
+                        setDeleteProductsModalOpen(true);
+                      }}
+                      alt="delete"
+                      cursor="pointer"
+                      p="5px"
+                      w={10}
+                      h={10}
+                      border="1px solid red"
+                      borderRadius="50%"
+                      as={MdOutlineDelete}
+                    />
+                  </Flex>
+                </Flex>
+              </Flex>
+            );
+          })
+        ) : (
+          <Flex
+            mt="md"
+            w="100%"
+            h="auto"
+            flexDir="column"
+            align="center"
+            justify="center"
+          >
+            <Icon
+              mb="1rem"
+              color="secondary.100"
+              w={20}
+              h={20}
+              as={MdErrorOutline}
+            />
+            <Heading
+              fontFamily="primary"
+              textAlign="center"
+              fontSize="2xl"
+              fontWeight="normal"
+            >
+              No matches found for your search
+            </Heading>
+          </Flex>
+        )}
+
+        {/* {filteredData?.length ? (
           filteredData?.map((product) => {
             let { image, sku, title, _id } = product;
             return (
@@ -180,7 +299,7 @@ export const ProductDisplay = (props) => {
               Click on the "Add Product" button to get started
             </Heading>
           </Flex>
-        )}
+        )} */}
       </Flex>
     </Flex>
   );

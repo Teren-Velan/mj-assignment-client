@@ -27,7 +27,6 @@ function Dashboard() {
     },
   });
   let user = useSelector((state) => state.user);
-
   let cookie = nookies.get();
   const token = cookie["mj-cookie"];
 
