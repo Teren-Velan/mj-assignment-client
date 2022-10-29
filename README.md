@@ -65,6 +65,10 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
+3. Start the application
+   ```sh
+   npm run start
+   ```
 <!-- USAGE EXAMPLES -->
 ## Usage
 Here let's take a tour around the application , looking at the more important functionalities this application has to offer.
